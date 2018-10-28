@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Calm Editor</title>
+        <!-- JS Preload -->
+        <script src="assets/codemirror/lib/codemirror.js"></script>
+        <!-- CSS -->
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="assets/codemirror/theme/monokai.css">
+    </head>
+    <body>
+        <div class="codeblock">
+            <h1 class="html title">HTML</h1>
+            <h1 class="html title">JS</h1>
+            <h1 class="html title">CSS</h1>
+            <div class="code" id="htmlCode"></div>
+            <div class="code" id="jsCode"></div>
+            <div class="code" id="cssCode"></div>
+        </div>
+        <iframe id="out" frameborder="0"></iframe>
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="assets/codemirror/mode/javascript/javascript.js"></script>
+        <script src="assets/codemirror/mode/xml/xml.js"></script>
+        <script src="assets/codemirror/mode/css/css.js"></script>
+        <script>
+            var js = CodeMirror(document.getElementById("jsCode"), {
+                lineNumbers: true,
+                theme: "monokai",
+                tabSize: 4,
+                indentUnit: 4,
+                smartIndent: true,
+                lineWrapping: true,
+                mode: "javascript"
+            });
+
+            var html = CodeMirror(document.getElementById("htmlCode"), {
+                lineNumbers: true,
+                theme: "monokai",
+                tabSize: 4,
+                indentUnit: 4,
+                smartIndent: true,
+                lineWrapping: true,
+                mode: "xml",
+                htmlMode: true
+            });
+
+            var css = CodeMirror(document.getElementById("cssCode"), {
+                lineNumbers: true,
+                theme: "monokai",
+                tabSize: 4,
+                indentUnit: 4,
+                smartIndent: true,
+                lineWrapping: true,
+                mode: "css"
+            });
+
+            function update() {
+                var frame = document.getElementById("out");
+                var frameDocument = frame.contentDocument;
+                // reset
+                frameDocument.write("");
+                // draw
+                var markup = document.createElement("div");
+                var style = document.createElement("style");
+                var script = document.createElement("script");
+                markup.innerHTML = html.getValue();
+                script.innerHTML = js.getValue();
+                style.innerHTML = css.getValue();
+
+                try {
+                    frameDocument.body.appendChild(style);
+                } catch {
+                    console.log("why");
+                }
+
+                try {
+                    frameDocument.body.appendChild(markup);
+                } catch {
+                    console.log("why");
+                }
+
+                try {
+                    frameDocument.body.appendChild(script);
+                } catch {
+                    console.log("why");
+                }
+            }
+
+            document.getElementById("jsCode").addEventListener("keyup", update, true);
+            document.getElementById("cssCode").addEventListener("keyup", update, true);
+            document.getElementById("htmlCode").addEventListener("keyup", update, true);
+        </script>
+    </body>
+</html>
