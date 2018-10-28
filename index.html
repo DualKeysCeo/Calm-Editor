@@ -60,6 +60,13 @@
                 mode: "css"
             });
 
+            function thing(obj) {
+                if (obj != null) {
+                    var frameDocument = document.getElementById("out").contentDocument;
+                    frameDocument.body.appendChild(obj);
+                } 
+            }
+
             function update() {
                 var frame = document.getElementById("out");
                 var frameDocument = frame.contentDocument;
@@ -73,23 +80,15 @@
                 script.innerHTML = js.getValue();
                 style.innerHTML = css.getValue();
 
-                try {
-                    frameDocument.body.appendChild(style);
-                } catch {
-                    console.log("why");
-                }
+                console.log({
+                    1: markup.innerHTML,
+                    2: style.innerHTML,
+                    3: script.innerHTML
+                })
 
-                try {
-                    frameDocument.body.appendChild(markup);
-                } catch {
-                    console.log("why");
-                }
-
-                try {
-                    frameDocument.body.appendChild(script);
-                } catch {
-                    console.log("why");
-                }
+                thing(style);
+                thing(markup);
+                thing(script);
             }
 
             document.getElementById("jsCode").addEventListener("keyup", update, true);
