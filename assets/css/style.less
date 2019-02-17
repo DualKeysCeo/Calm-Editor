@@ -1,18 +1,26 @@
 html, body {
-    background-image: url("../img/background.jpeg");
+    font-family: "Fira Mono", "Consolas", monospace;
+    background-color: #333;
     padding: 0;
     margin: 0
 }
 
 .codeblock {
+    text-align: center;
+    height: 40vh
+}
+
+.codeblock, .titles {
     font-size: 0;
 }
 
 .code, .title {
     display: inline-block;
+    width: calc(100% / 3);
+    border-top: none;
+    margin-bottom: 0;
+    text-align: left;
     font-size: 18px;
-    width: 33.33%;
-    margin: 0;
 }
 
 .code {
@@ -20,16 +28,29 @@ html, body {
 }
 
 .CodeMirror {
-    height: auto;
+    max-height: 40vh !important;
+    height: 100% !important;
 }
 
 .title {
-    height: 5% !important;
+    height: 5vh !important;
     text-align: center;
-    font-size: 30px
+    font-size: 30px;
+    color: white
 }
 
-.out {
+#out {
+    background-color: white;
+    margin-bottom: 0;
+    height: 51.5vh;
     width: 100vw;
-    height: 100vh;
+}
+
+.space {
+    background-color: #484848;
+    height: 1vh !important
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
